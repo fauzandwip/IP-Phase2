@@ -1,10 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Register from '../pages/Register';
+import RootLayout from '../layouts/RootLayout';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <div>HOME PAGE</div>,
+		element: <RootLayout />,
 		children: [
 			{
 				path: 'register',
