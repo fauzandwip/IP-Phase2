@@ -1,6 +1,7 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { User } = require('../models');
 const { signToken } = require('../helpers/jwt');
+const { OAuth2Client } = require('google-auth-library');
 
 class AuthController {
 	static async register(req, res, next) {
@@ -43,6 +44,13 @@ class AuthController {
 
 			const user = await User.findOne({ where: { email } });
 
+			if (user.login_by !== 'email') {
+				throw {
+					name: 'BadRequest',
+					message: `Please login with ${user.login_by}`,
+				};
+			}
+
 			if (!user || !comparePassword(password, user.password)) {
 				throw {
 					name: 'Unauthenticated',
@@ -55,6 +63,35 @@ class AuthController {
 			res.status(200).json({
 				access_token,
 				email: user.email,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	static async google(req, res, next) {
+		try {
+			const client = new OAuth2Client();
+			const ticket = await client.verifyIdToken({
+				idToken: req.headers.google_token,
+				audience: process.env.GOOGLE_CLIENT_ID,
+			});
+
+			const payload = ticket.getPayload();
+			const [user, isNewRecord] = await User.findOrCreate({
+				where: {
+					email: payload.email,
+				},
+				defaults: {
+					username: payload.name,
+					email: payload.email,
+					password: 'jackS',
+					login_by: 'google',
+				},
+			});
+
+			res.status(isNewRecord ? 201 : 200).json({
+				access_token: signToken({ id: user.id }),
 			});
 		} catch (error) {
 			next(error);
