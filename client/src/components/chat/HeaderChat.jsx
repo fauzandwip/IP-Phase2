@@ -7,7 +7,7 @@ const HeaderChat = ({ imageUrl, text }) => {
 				<div className="img w-12 h-12 rounded-full">
 					<img src={imageUrl} alt="profile" className="rounded-full" />
 				</div>
-				<div className="text-xl font-black">{text}</div>
+				<div className="text-xl font-semibold">{text}</div>
 			</div>
 		</div>
 	);

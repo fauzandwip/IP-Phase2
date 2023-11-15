@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import ButtonSubmit from '../components/ButtonSubmit';
-import CustomForm from '../components/CustomForm';
-import CustomInput from '../components/CustomInput';
-import Title from '../components/Title';
-import FooterForm from '../components/FooterForm';
+import ButtonSubmit from '../components/form/ButtonSubmit';
+import CustomForm from '../components/form/CustomForm';
+import CustomInput from '../components/form/CustomInput';
+import Title from '../components/form/Title';
+import FooterForm from '../components/form/FooterForm';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -55,7 +55,7 @@ const Register = () => {
 		<div className="w-screen min-h-screen flex flex-row">
 			<div className="form-section flex-1 flex justify-center items-center">
 				<CustomForm onSubmit={handleOnSubmit}>
-					<Title addClassName={'text-5xl font-bold mb-14'}>
+					<Title addClassName={'text-5xl text-center font-bold mb-14'}>
 						Account Register
 					</Title>
 					<CustomInput

@@ -3,16 +3,17 @@ import InputText from './InputChat';
 
 const FooterChat = ({ message, setMessage }) => {
 	return (
-		<div className="chat-typing w-full h-24 bg-white-primary">
-			<div className="typing flex flex-row py-4 px-8 gap-8">
+		<div className="chat-typing w-full h-20 bg-white-primary">
+			<div className="typing flex flex-row py-4 px-4 gap-4">
 				<InputText
 					value={message}
+					addClassName={'grow'}
 					placeholder={'Write a message .....'}
 					onChange={(e) => {
 						setMessage(e.target.value);
 					}}
 				/>
-				<div className="send w-12 h-12 rounded-xl flex justify-center items-center bg-blue-primary">
+				<div className="send w-12 h-12 rounded-2xl flex justify-center items-center bg-blue-primary">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

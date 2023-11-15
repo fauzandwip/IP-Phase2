@@ -8,7 +8,7 @@ const MainChat = () => {
 	const [message, setMessage] = useState('');
 
 	return (
-		<div className="chat w-full h-screen flex flex-col">
+		<div className="chat w-full h-full flex flex-col">
 			<HeaderChat imageUrl={'https://imgur.com/4gaSugI.jpg'} text={'Patito'} />
 			<BodyChat />
 			<FooterChat message={message} setMessage={setMessage} />

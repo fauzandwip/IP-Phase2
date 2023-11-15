@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import ButtonSubmit from '../components/ButtonSubmit';
-import CustomForm from '../components/CustomForm';
-import CustomInput from '../components/CustomInput';
-import Title from '../components/Title';
+import ButtonSubmit from '../components/form/ButtonSubmit';
+import CustomForm from '../components/form/CustomForm';
+import CustomInput from '../components/form/CustomInput';
+import Title from '../components/form/Title';
 import api from '../api';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from '@react-oauth/google';
-import FooterForm from '../components/FooterForm';
+import FooterForm from '../components/form/FooterForm';
 
 const Login = () => {
 	const navigate = useNavigate();

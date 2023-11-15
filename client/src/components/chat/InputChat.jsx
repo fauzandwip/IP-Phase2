@@ -6,7 +6,7 @@ const InputText = ({ value, addClassName, placeholder, onChange }) => {
 			type="text"
 			name=""
 			value={value}
-			className={`type-bar grow rounded-xl flex items-center px-8 bg-blue-sec text-lg text-blue-primary placeholder-blue-primary ring-1 outline-1 ${addClassName}`}
+			className={`type-bar rounded-xl flex items-center px-4 bg-blue-sec text-md text-blue-primary placeholder-blue-primary ring-0 outline-0 ${addClassName}`}
 			placeholder={placeholder}
 			onChange={onChange}
 		/>

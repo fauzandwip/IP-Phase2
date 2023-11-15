@@ -14,10 +14,12 @@ const BodyChat = () => {
 		'Hello, Iam jack Sparrroww',
 		'Hello, Iam jack Sparrroww',
 		'Hello, Iam jack Sparrroww',
+		'Hello, Iam jack Sparrroww',
+		'Hello, Iam jack Sparrroww',
 	];
 
 	return (
-		<div className="chat-section w-full h-full p-4 flex flex-col gap-2 bg-blue-sec">
+		<div className="chat-section w-full h-full p-4 flex flex-col gap-2 overflow-y-auto scrollbar-hide bg-blue-sec">
 			{dummyMessages.map((message, idx) => {
 				return <BoardMessage key={idx} message={message} />;
 			})}
