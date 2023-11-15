@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 			photoUrl: DataTypes.STRING,
+			login_by: DataTypes.STRING,
 		},
 		{
 			sequelize,

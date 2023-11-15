@@ -7,6 +7,7 @@ import api from '../api';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -20,7 +21,6 @@ const Login = () => {
 
 		try {
 			const { data } = await api.post('/auth/login', user);
-			console.log(data);
 
 			localStorage.setItem('access_token', data.access_token);
 			Swal.fire({
@@ -31,6 +31,21 @@ const Login = () => {
 			navigate('/');
 		} catch (error) {
 			toast.error(error.response.data.message);
+		}
+	};
+
+	const handleOnGoogle = async ({ credential }) => {
+		try {
+			const { data } = await api.post('/auth/google', null, {
+				headers: {
+					google_token: credential,
+				},
+			});
+
+			localStorage.setItem('access_token', data.access_token);
+			navigate('/');
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -68,6 +83,15 @@ const Login = () => {
 						}}
 					/>
 					<ButtonSubmit value={'Login'} />
+					<div className="flex w-full justify-center">or</div>
+					<GoogleLogin
+						onSuccess={(credentialResponse) => {
+							handleOnGoogle(credentialResponse);
+						}}
+						onError={() => {
+							toast.error('Login Failed!');
+						}}
+					/>
 				</CustomForm>
 			</div>
 			<div className="flex-1 bg-gradient-to-tr from-indigo-400 to-indigo-700"></div>
