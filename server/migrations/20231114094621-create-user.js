@@ -26,6 +26,10 @@ module.exports = {
 			photoUrl: {
 				type: Sequelize.STRING,
 			},
+			login_by: {
+				type: Sequelize.STRING,
+				defaultValue: 'email',
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,

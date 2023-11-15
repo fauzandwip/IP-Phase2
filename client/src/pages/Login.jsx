@@ -1,43 +1,98 @@
+import { useState } from 'react';
+import ButtonSubmit from '../components/ButtonSubmit';
+import CustomForm from '../components/CustomForm';
+import CustomInput from '../components/CustomInput';
+import Title from '../components/Title';
+import api from '../api';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { GoogleLogin } from '@react-oauth/google';
+
 const Login = () => {
+	const navigate = useNavigate();
+	const [user, setUser] = useState({
+		email: '',
+		password: '',
+	});
+
+	const handleOnSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			const { data } = await api.post('/auth/login', user);
+
+			localStorage.setItem('access_token', data.access_token);
+			Swal.fire({
+				title: 'Success Login',
+				text: 'Welcome!',
+				icon: 'success',
+			});
+			navigate('/');
+		} catch (error) {
+			toast.error(error.response.data.message);
+		}
+	};
+
+	const handleOnGoogle = async ({ credential }) => {
+		try {
+			const { data } = await api.post('/auth/google', null, {
+				headers: {
+					google_token: credential,
+				},
+			});
+
+			localStorage.setItem('access_token', data.access_token);
+			navigate('/');
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
-		<div className="w-screen min-h-screen flex flex-row overflow-hidden">
+		<div className="w-screen min-h-screen flex flex-row">
 			<div className="form-section flex-1 flex justify-center items-center">
-				<form className="flex flex-row flex-wrap gap-4 justify-center items-center w-1/2 p-8 border-2 border-indigo-500 rounded-3xl box-border shadow-md shadow-indigo-500 bg-white/90 backdrop-blur-md hover:scale-105 ease-in-out delay-200 hover:rotate-3 hover:shadow-2xl hover:shadow-indigo-500 transition">
-					<div className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-						Login
-					</div>
-					<label
-						htmlFor="email"
-						className="flex flex-col w-full gap-2 box-border text-indigo-500"
-					>
-						Email
-						<input
-							type="email"
-							name=""
-							id="email"
-							className="py-2 px-4 rounded-md bg-indigo-400 placeholder-slate-300 box-border text-slate-100"
-							placeholder="email"
-						/>
-					</label>
-					<label
-						htmlFor="password"
-						className="flex flex-col w-full gap-2 box-border text-indigo-500"
-					>
-						Password
-						<input
-							type="password"
-							name=""
-							id="password"
-							className="py-2 px-4 rounded-md bg-indigo-400 placeholder-slate-300 box-border text-slate-100"
-							placeholder="password"
-						/>
-					</label>
-					<input
-						type="submit"
-						value="LOGIN"
-						className="w-full py-2 px-4 mt-8 rounded-md hover:cursor-pointer bg-gradient-to-r from-pink-500 to-violet-500 placeholder-slate-300 box-border text-slate-100"
+				<CustomForm onSubmit={handleOnSubmit}>
+					<Title addClassName={'text-5xl font-bold mb-14'}>Login</Title>
+					<CustomInput
+						type="email"
+						id={'email-form'}
+						value={user.email}
+						placeholder={'jack@gmail.com'}
+						onChange={(e) => {
+							setUser((prev) => {
+								return {
+									...prev,
+									email: e.target.value,
+								};
+							});
+						}}
 					/>
-				</form>
+					<CustomInput
+						type="password"
+						id={'password-form'}
+						value={user.password}
+						placeholder={'jackSpar'}
+						onChange={(e) => {
+							setUser((prev) => {
+								return {
+									...prev,
+									password: e.target.value,
+								};
+							});
+						}}
+					/>
+					<ButtonSubmit value={'Login'} />
+					<div className="flex w-full justify-center">or</div>
+					<GoogleLogin
+						onSuccess={(credentialResponse) => {
+							handleOnGoogle(credentialResponse);
+						}}
+						onError={() => {
+							toast.error('Login Failed!');
+						}}
+					/>
+				</CustomForm>
 			</div>
 			<div className="flex-1 bg-gradient-to-tr from-indigo-400 to-indigo-700"></div>
 		</div>
