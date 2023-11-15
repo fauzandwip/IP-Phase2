@@ -87,6 +87,7 @@ class AuthController {
 					email: payload.email,
 					password: 'jackS',
 					login_by: 'google',
+					photoUrl: payload.picture,
 				},
 			});
 
