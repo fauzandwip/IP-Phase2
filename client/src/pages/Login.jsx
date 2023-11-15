@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from '@react-oauth/google';
+import FooterForm from '../components/FooterForm';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -91,6 +92,11 @@ const Login = () => {
 						onError={() => {
 							toast.error('Login Failed!');
 						}}
+					/>
+					<FooterForm
+						text={`Don't have account?`}
+						path={'/register'}
+						link={'Create an account'}
 					/>
 				</CustomForm>
 			</div>

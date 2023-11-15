@@ -3,6 +3,7 @@ import ButtonSubmit from '../components/ButtonSubmit';
 import CustomForm from '../components/CustomForm';
 import CustomInput from '../components/CustomInput';
 import Title from '../components/Title';
+import FooterForm from '../components/FooterForm';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -107,6 +108,11 @@ const Register = () => {
 						onError={() => {
 							toast.error('Register Failed!');
 						}}
+					/>
+					<FooterForm
+						text={'You have account?'}
+						path={'/login'}
+						link={'Login Now'}
 					/>
 				</CustomForm>
 			</div>
