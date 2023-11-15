@@ -7,6 +7,7 @@ import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -31,6 +32,21 @@ const Register = () => {
 			error.response.data.messages.forEach((message) => {
 				toast.error(message);
 			});
+		}
+	};
+
+	const handleOnGoogle = async ({ credential }) => {
+		try {
+			const { data } = await api.post('/auth/google', null, {
+				headers: {
+					google_token: credential,
+				},
+			});
+
+			localStorage.setItem('access_token', data.access_token);
+			navigate('/');
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -83,6 +99,15 @@ const Register = () => {
 						}}
 					/>
 					<ButtonSubmit value={'REGISTER'} />
+					<div className="flex w-full justify-center">or</div>
+					<GoogleLogin
+						onSuccess={(credentialResponse) => {
+							handleOnGoogle(credentialResponse);
+						}}
+						onError={() => {
+							toast.error('Register Failed!');
+						}}
+					/>
 				</CustomForm>
 			</div>
 			<div className="flex-1 bg-gradient-to-tr from-indigo-400 to-indigo-700"></div>
