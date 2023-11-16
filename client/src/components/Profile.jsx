@@ -1,17 +1,17 @@
 // import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import api from '../api';
 import { toast } from 'react-toastify';
 
 const Profile = () => {
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	const { currentUser, setCurrentUser } = useContext(AuthContext);
 
 	const [display, setDisplay] = useState('hidden');
-	const [profileImg, setProfileImg] = useState('https://imgur.com/4gaSugI.jpg');
-	const [image, setImage] = useState({});
+	const [profileImg, setProfileImg] = useState('');
+	const [image, setImage] = useState(null);
 
 	const onUploadFile = (e) => {
 		const imageInput = e.target.files[0];
@@ -30,25 +30,43 @@ const Profile = () => {
 
 	const handleOnSendFile = async () => {
 		try {
-			// console.log('sendfile');
-			// console.log(image);
-			const formData = new FormData();
-			formData.append('imageUrl', image);
-			const { data } = await api.put(`/profile/img-url`, formData, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-					'Content-Type': 'multipart/form-data',
-				},
-			});
-			setCurrentUser((prev) => {
-				return {
-					...prev,
-					photoUrl: data.data.photoUrl,
-				};
-			});
-			toast.success(data.message);
+			console.log('sendfile');
+			console.log(image);
+			if (image) {
+				const formData = new FormData();
+				formData.append('imageUrl', image);
+				const { data } = await api.put(`/profile/img-url`, formData, {
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+						'Content-Type': 'multipart/form-data',
+					},
+				});
+				setCurrentUser((prev) => {
+					return {
+						...prev,
+						photoUrl: data.data.photoUrl,
+					};
+				});
+				toast.success(data.message);
+			}
 		} catch (error) {
 			console.log(error);
+			toast.error(error.response.data.message);
+		}
+	};
+
+	const handleOnDeleteAccount = async () => {
+		try {
+			const { data } = await api.delete('/user', {
+				headers: {
+					Authorization: localStorage.getItem('access_token'),
+				},
+			});
+			toast.success(data.message);
+			navigate('/login');
+		} catch (error) {
+			console.log(error);
+			toast.error(error.response.data.message);
 		}
 	};
 
@@ -102,13 +120,19 @@ const Profile = () => {
 				<div className="username text-2xl font-black text-center">
 					{currentUser.username}
 				</div>
+				<button
+					onClick={handleOnSendFile}
+					className="w-max px-3 py-1 mt-4 bg-blue-primary text-sm text-slate-100 rounded-xl cursor-pointer"
+				>
+					Update
+				</button>
 			</div>
-			<div
-				onClick={handleOnSendFile}
+			<button
+				onClick={handleOnDeleteAccount}
 				className="w-max px-3 py-1 bg-red-400 text-sm text-slate-100 rounded-xl cursor-pointer"
 			>
 				Delete Account
-			</div>
+			</button>
 		</div>
 	);
 };

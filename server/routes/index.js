@@ -14,5 +14,6 @@ router.put(
 	multerUpload.single('imageUrl'),
 	ProfileController.updateImage
 );
+router.delete('/user', authentication, ProfileController.deleteUser);
 
 module.exports = router;

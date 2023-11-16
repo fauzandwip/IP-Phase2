@@ -4,6 +4,7 @@ import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Toolbar = () => {
 	const navigate = useNavigate();
@@ -15,8 +16,9 @@ const Toolbar = () => {
 			<button
 				className="rounded-full p-2 bg-white-primary/50"
 				onClick={() => {
-					signOut(auth);
+					// signOut(auth);
 					localStorage.removeItem('access_token');
+					toast.success('Success Logout!');
 					navigate('/login');
 				}}
 			>

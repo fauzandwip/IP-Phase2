@@ -63,6 +63,18 @@ class ProfileController {
 			next(error);
 		}
 	}
+
+	static async deleteUser(req, res, next) {
+		try {
+			req.user.destroy();
+			res.status(200).json({
+				message: 'Account success to delete',
+			});
+		} catch (error) {
+			console.log(error);
+			next(error);
+		}
+	}
 }
 
 module.exports = ProfileController;

@@ -18,7 +18,7 @@ const Login = () => {
 	const { currentUser, setCurrentUser } = useContext(AuthContext);
 	const [user, setUser] = useState({
 		email: 'test1@gmail.com',
-		password: '123456',
+		password: '12345',
 	});
 
 	const handleOnSubmit = async (e) => {
