@@ -33,8 +33,8 @@ const BoardMessage = ({ data }) => {
 		ref.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [data]);
 
-	console.log(username, 'message username');
-	console.log(data, 'message data');
+	// console.log(username, 'message username');
+	// console.log(data, 'message data');
 
 	return (
 		// full long

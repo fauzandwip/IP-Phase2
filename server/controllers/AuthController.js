@@ -23,7 +23,7 @@ class AuthController {
 			// }
 
 			let photoUrl = await getImageUrl();
-			console.log('photoUrl', photoUrl);
+			// console.log('photoUrl', photoUrl);
 
 			const newUser = await User.create({
 				username,
@@ -65,7 +65,7 @@ class AuthController {
 				},
 			});
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			next(error);
 		}
 	}
@@ -110,7 +110,7 @@ class AuthController {
 				},
 			});
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			next(error);
 		}
 	}

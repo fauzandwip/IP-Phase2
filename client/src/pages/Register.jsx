@@ -29,7 +29,7 @@ const Register = () => {
 
 		try {
 			const { data } = await api.post('/auth/register', user);
-			console.log(data);
+			// console.log(data);
 
 			// * CLIENT FIREBASE
 			// const userCredential = await createUserWithEmailAndPassword(
@@ -53,7 +53,7 @@ const Register = () => {
 			});
 			navigate('/login');
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 			// toast.error(error.response.data.message);
 			error.response.data.messages.forEach((message) => {
 				toast.error(message);
@@ -74,7 +74,7 @@ const Register = () => {
 				return { ...prev, ...data.data };
 			});
 
-			console.log(currentUser, 'currentUser', data);
+			// console.log(currentUser, 'currentUser', data);
 			navigate('/');
 		} catch (error) {
 			console.log(error);

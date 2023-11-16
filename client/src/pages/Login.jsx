@@ -42,7 +42,7 @@ const Login = () => {
 				text: 'Welcome!',
 				icon: 'success',
 			});
-			console.log(currentUser, 'currentUser', data);
+			// console.log(currentUser, 'currentUser', data);
 			navigate('/');
 		} catch (error) {
 			// toast.error(error.code);

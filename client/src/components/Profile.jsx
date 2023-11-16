@@ -30,8 +30,8 @@ const Profile = () => {
 
 	const handleOnSendFile = async () => {
 		try {
-			console.log('sendfile');
-			console.log(image);
+			// console.log('sendfile');
+			// console.log(image);
 			if (image) {
 				const formData = new FormData();
 				formData.append('imageUrl', image);
@@ -50,7 +50,7 @@ const Profile = () => {
 				toast.success(data.message);
 			}
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			toast.error(error.response.data.message);
 		}
 	};
@@ -65,7 +65,7 @@ const Profile = () => {
 			toast.success(data.message);
 			navigate('/login');
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			toast.error(error.response.data.message);
 		}
 	};

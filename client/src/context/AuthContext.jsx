@@ -42,7 +42,7 @@ export const AuthContextProvider = ({ children }) => {
 		fetchProfile();
 	}, []);
 
-	console.log('currentUser', currentUser);
+	// console.log('currentUser', currentUser);
 
 	return (
 		<AuthContext.Provider value={{ currentUser, setCurrentUser }}>

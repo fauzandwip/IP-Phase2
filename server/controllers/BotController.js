@@ -58,7 +58,7 @@ const runAssistant = async () => {
 			role: 'user',
 			content: 'how much price of island?',
 		});
-		console.log(message);
+		// console.log(message);
 
 		const run = await openai.beta.threads.runs.create(thread.id, {
 			assistant_id: assistant.id,
@@ -73,10 +73,10 @@ const runAssistant = async () => {
 					messages.data.forEach((msg) => {
 						const role = msg.role;
 						const content = msg.content[0].text.value;
-						console.log(`${role}: ${content}`);
+						// console.log(`${role}: ${content}`);
 					});
 				} else {
-					console.log(run);
+					// console.log(run);
 					console.log('Run is not completed yet.');
 				}
 			} catch (error) {

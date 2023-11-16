@@ -19,7 +19,7 @@ class ProfileController {
 				photoUrl,
 			});
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			next(error);
 		}
 	}
@@ -28,8 +28,8 @@ class ProfileController {
 		try {
 			// const { id } = req.params;
 
-			console.log(req.file);
-			console.log('trigerr');
+			// console.log(req.file);
+			// console.log('trigerr');
 
 			if (!req.file) {
 				throw {
@@ -59,7 +59,7 @@ class ProfileController {
 				},
 			});
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			next(error);
 		}
 	}
@@ -71,7 +71,7 @@ class ProfileController {
 				message: 'Account success to delete',
 			});
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			next(error);
 		}
 	}
