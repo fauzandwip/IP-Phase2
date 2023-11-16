@@ -9,21 +9,29 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from '@react-oauth/google';
 import FooterForm from '../components/form/FooterForm';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const Login = () => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState({
-		email: '',
-		password: '',
+		email: 'test1@gmail.com',
+		password: '123456',
 	});
 
 	const handleOnSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			const { data } = await api.post('/auth/login', user);
-
-			localStorage.setItem('access_token', data.access_token);
+			// const { data } = await api.post('/auth/login', user);
+			const res = await signInWithEmailAndPassword(
+				auth,
+				user.email,
+				user.password
+			);
+			// console.log(res);
+			// console.log(res.user.accessToken);
+			localStorage.setItem('access_token', res.user.accessToken);
 			Swal.fire({
 				title: 'Success Login',
 				text: 'Welcome!',
@@ -31,7 +39,8 @@ const Login = () => {
 			});
 			navigate('/');
 		} catch (error) {
-			toast.error(error.response.data.message);
+			toast.error(error.code);
+			// toast.error(error.response.data.message);
 		}
 	};
 

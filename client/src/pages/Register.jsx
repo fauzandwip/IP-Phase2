@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from '@react-oauth/google';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../../firebase';
+import { setDoc, doc } from 'firebase/firestore';
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -22,7 +25,23 @@ const Register = () => {
 		e.preventDefault();
 
 		try {
-			await api.post('/auth/register', user);
+			// const { data } = await api.post('/auth/register', user);
+			// console.log(data);
+
+			const userCredential = await createUserWithEmailAndPassword(
+				auth,
+				user.email,
+				user.password
+			);
+
+			await setDoc(doc(db, 'users', userCredential.user.uid), {
+				uid: userCredential.user.uid,
+				username: user.username,
+				email: user.email,
+			});
+
+			await setDoc(doc(db, 'chatUsers', userCredential.user.uid), {});
+
 			Swal.fire({
 				title: 'Success Register',
 				text: 'please login!',
@@ -30,9 +49,11 @@ const Register = () => {
 			});
 			navigate('/login');
 		} catch (error) {
-			error.response.data.messages.forEach((message) => {
-				toast.error(message);
-			});
+			console.log({ error });
+			toast.error(error.code);
+			// error.response.data.messages.forEach((message) => {
+			// 	toast.error(message);
+			// });
 		}
 	};
 

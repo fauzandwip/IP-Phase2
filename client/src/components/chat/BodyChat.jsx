@@ -1,28 +1,33 @@
 // import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import BoardMessage from './BoardMessage';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 const BodyChat = () => {
-	const dummyMessages = [
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-		'Hello, Iam jack Sparrroww',
-	];
+	const [messages, setMessages] = useState([]);
 
+	console.log(import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID);
+	useEffect(() => {
+		const unSub = onSnapshot(
+			doc(db, 'chats', import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID),
+			(doc) => {
+				doc.exists() && setMessages(doc.data().messages);
+			}
+		);
+
+		return () => {
+			unSub();
+		};
+	}, []);
+
+	console.log(messages);
 	return (
-		<div className="chat-section w-full h-full p-4 flex flex-col gap-2 overflow-y-auto scrollbar-hide bg-blue-sec">
-			{dummyMessages.map((message, idx) => {
-				return <BoardMessage key={idx} message={message} />;
-			})}
+		<div className="chat-section w-full h-full p-4 flex flex-col mt-auto gap-2 overflow-y-scroll scrollbar-hide bg-blue-sec">
+			{messages &&
+				messages.map((message, idx) => {
+					return <BoardMessage key={idx} data={message} />;
+				})}
 		</div>
 	);
 };

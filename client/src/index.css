@@ -20,3 +20,14 @@
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 }
+
+.owner-msg {
+	background-color: #4c95ff;
+	color: #f8faff;
+	flex-direction: row-reverse;
+}
+
+.other-msg {
+	background-color: #f8faff;
+	color: #1e293b;
+}

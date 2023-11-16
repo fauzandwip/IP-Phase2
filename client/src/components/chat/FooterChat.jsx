@@ -1,19 +1,49 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import InputText from './InputChat';
+import { useContext, useState } from 'react';
+import { v4 as uuid } from 'uuid';
+import { AuthContext } from '../../context/AuthContext';
+import { updateDoc, arrayUnion, doc, Timestamp } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
-const FooterChat = ({ message, setMessage }) => {
+const FooterChat = () => {
+	const [text, setText] = useState('');
+	const { currentUser } = useContext(AuthContext);
+
+	const handleOnSend = async () => {
+		try {
+			await updateDoc(
+				doc(db, 'chats', import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID),
+				{
+					messages: arrayUnion({
+						id: uuid(),
+						text,
+						senderId: currentUser.uid,
+						date: Timestamp.now(),
+					}),
+				}
+			);
+			// setText('');
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<div className="chat-typing w-full h-20 bg-white-primary">
 			<div className="typing flex flex-row py-4 px-4 gap-4">
 				<InputText
-					value={message}
+					value={text}
 					addClassName={'grow'}
 					placeholder={'Write a message .....'}
 					onChange={(e) => {
-						setMessage(e.target.value);
+						setText(e.target.value);
 					}}
 				/>
-				<div className="send w-12 h-12 rounded-2xl flex justify-center items-center bg-blue-primary">
+				<div
+					onClick={handleOnSend}
+					className="send w-12 h-12 rounded-2xl flex justify-center items-center bg-blue-primary"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -36,7 +66,7 @@ const FooterChat = ({ message, setMessage }) => {
 
 export default FooterChat;
 
-FooterChat.propTypes = {
-	message: PropTypes.string,
-	setMessage: PropTypes.func,
-};
+// FooterChat.propTypes = {
+// 	message: PropTypes.string,
+// 	setMessage: PropTypes.func,
+// };
