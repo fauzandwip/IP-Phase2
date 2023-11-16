@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,4 +8,27 @@
 	html {
 		font-family: 'Quicksand', system-ui, sans-serif;
 	}
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+.owner-msg {
+	background-color: #4c95ff;
+	color: #f8faff;
+	text-align: end;
+	flex-direction: row-reverse;
+}
+
+.other-msg {
+	background-color: white;
+	color: #1e293b;
 }

@@ -4,6 +4,8 @@ const { User } = require('../models');
 const authentication = async (req, res, next) => {
 	try {
 		const { authorization } = req.headers;
+		// console.log('authentication');
+		// console.log(req.file, req.body);
 
 		if (!authorization) {
 			throw {
@@ -26,6 +28,7 @@ const authentication = async (req, res, next) => {
 		req.user = user;
 		next();
 	} catch (error) {
+		// console.log(error);
 		next(error);
 	}
 };
