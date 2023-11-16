@@ -23,11 +23,12 @@ const FooterChat = () => {
 						id: uuid(),
 						text,
 						senderId: currentUser.id,
+						photoUrl: currentUser.photoUrl,
 						date: Timestamp.now(),
 					}),
 				}
 			);
-			// setText('');
+			setText('');
 		} catch (error) {
 			console.log(error);
 		}

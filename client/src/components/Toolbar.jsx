@@ -1,14 +1,18 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase';
-import { signOut } from 'firebase/auth';
+// import { auth } from '../../firebase';
+// import { signOut } from 'firebase/auth';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
-const Toolbar = () => {
+const Toolbar = ({ sideBar, setSideBar }) => {
 	const navigate = useNavigate();
 	const { currentUser } = useContext(AuthContext);
+
+	const onClickProfile = () => {
+		sideBar === 'profile' ? setSideBar('sidebar') : setSideBar('profile');
+	};
 
 	return (
 		<div className="w-28 h-full flex flex-col justify-end items-center px-4 py-12 gap-8 bg-blue-sec rounded-l-[35px]">
@@ -37,7 +41,10 @@ const Toolbar = () => {
 					/>
 				</svg>
 			</button>
-			<div className="img w-12 h-12 rounded-full">
+			<div
+				onClick={onClickProfile}
+				className="img w-12 h-12 rounded-full cursor-pointer"
+			>
 				<img
 					src={currentUser.photoUrl}
 					alt="profile"
@@ -50,10 +57,10 @@ const Toolbar = () => {
 
 export default Toolbar;
 
-// Toolbar.propTypes = {
-// 	imageUrl: PropTypes.string,
-// 	chatName: PropTypes.string,
-// 	textMsg: PropTypes.string,
-// 	bgColor: PropTypes.string,
-// 	color: PropTypes.string,
-// };
+Toolbar.propTypes = {
+	sideBar: PropTypes.string,
+	setSideBar: PropTypes.func,
+	// textMsg: PropTypes.string,
+	// bgColor: PropTypes.string,
+	// color: PropTypes.string,
+};

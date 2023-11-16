@@ -24,6 +24,7 @@
 .owner-msg {
 	background-color: #4c95ff;
 	color: #f8faff;
+	text-align: end;
 	flex-direction: row-reverse;
 }
 

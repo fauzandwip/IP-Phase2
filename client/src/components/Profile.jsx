@@ -139,10 +139,10 @@ const Profile = () => {
 
 export default Profile;
 
-// Toolbar.propTypes = {
-// 	imageUrl: PropTypes.string,
-// 	chatName: PropTypes.string,
-// 	textMsg: PropTypes.string,
-// 	bgColor: PropTypes.string,
-// 	color: PropTypes.string,
+// Profile.propTypes = {
+// sideBar: PropTypes.string,
+// chatName: PropTypes.string,
+// textMsg: PropTypes.string,
+// bgColor: PropTypes.string,
+// color: PropTypes.string,
 // };

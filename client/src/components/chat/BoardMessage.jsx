@@ -10,27 +10,6 @@ const BoardMessage = ({ data }) => {
 
 	const ref = useRef();
 
-	// const handleOnDelete = async () => {
-	// 	console.log('delete trigerr');
-	// 	try {
-	// 		const docRef = doc(
-	// 			db,
-	// 			'chats',
-	// 			import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID
-	// 		);
-	// 		// docRef.update({
-	// 		// 	messages: FieldValue.arrayRemove(data.id),
-	// 		// });
-	// 		await updateDoc(docRef, {
-	// 			messages: arrayRemove(data.id),
-	// 		});
-	// 		console.log(data.id);
-	// 		console.log(import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID);
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
-
 	useEffect(() => {
 		const fetchUser = async () => {
 			const q = query(
@@ -54,28 +33,57 @@ const BoardMessage = ({ data }) => {
 		ref.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [data]);
 
-	// console.log(username, 'message username');
-	// console.log(data, 'message data');
+	console.log(username, 'message username');
+	console.log(data, 'message data');
 
 	return (
+		// full long
 		<div
 			className={`flex flex-row w-full ${
 				data.senderId == currentUser.id ? 'justify-end' : 'justify-start'
 			}`}
 		>
+			{/* half width */}
 			<div
-				className={`w-2/5 flex flex-row ${
+				className={`w-3/5 flex flex-row ${
 					data.senderId == currentUser.id ? 'justify-end' : 'justify-start'
 				}`}
 			>
+				{/* inside */}
 				<div
 					ref={ref}
-					className={`message w-fit flex flex-row gap-2 py-2 px-4 rounded-2xl ${
+					className={`message w-fit flex flex-row gap-2 py-2 px-4 text-sm rounded-2xl ${
 						data.senderId == currentUser.id ? 'owner-msg' : 'other-msg'
 					}`}
 				>
-					<span>{username}</span>
-					<span>{data.text}</span>
+					{data.senderId == currentUser.id ? (
+						<>
+							<div className="text-msg flex flex-col">
+								<span>{data.text}</span>
+							</div>
+						</>
+					) : (
+						<>
+							<img
+								src={data.photoUrl}
+								alt="Profile"
+								className="w-10 h-10 rounded-full"
+							/>
+							<div className="text-msg flex flex-col">
+								<span className=" text-slate-900 font-bold">{username}</span>
+								<span>{data.text}</span>
+							</div>
+						</>
+					)}
+					{/* <img
+						src={data.photoUrl}
+						alt="Profile"
+						className="w-10 h-10 rounded-full"
+					/>
+					<div className="text-msg flex flex-col">
+						<span className=" text-slate-900 font-bold">{username}</span>
+						<span>{data.text}</span>
+					</div> */}
 				</div>
 			</div>
 		</div>

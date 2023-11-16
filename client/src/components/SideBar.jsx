@@ -49,9 +49,9 @@ const SideBar = () => {
 
 			{/* chats */}
 			<div className="list-chats flex flex-col gap-4">
-				<h3 className="ms-2 font-medium text-sm text-slate-500">All Users</h3>
+				<h3 className="ms-2 font-medium text-sm text-slate-500">All Chats</h3>
 				<BoardChat
-					// imageUrl={user.imageUrl}
+					imageUrl={'https://imgur.com/4gaSugI.jpg'}
 					chatName={'Tortuga'}
 					textMsg={'Jack Sparrow here'}
 					bgColor={'bg-white'}
