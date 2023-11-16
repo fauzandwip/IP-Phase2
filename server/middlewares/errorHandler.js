@@ -35,6 +35,15 @@ const errorHandler = (err, req, res, next) => {
 			break;
 	}
 
+	// switch (err.code) {
+	// 	case 'auth/invalid-password':
+	// 	case 'auth/invalid-email':
+	// 	case 'auth/email-already-exists':
+	// 		status = 400;
+	// 		message = err.message;
+	// 		break;
+	// }
+
 	// res.send(err);
 	res.status(status).json(message ? { message } : { messages });
 };
