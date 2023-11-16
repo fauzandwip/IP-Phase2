@@ -10,7 +10,9 @@ const FooterChat = () => {
 	const [text, setText] = useState('');
 	const { currentUser } = useContext(AuthContext);
 
-	const handleOnSend = async () => {
+	const handleOnSend = async (e) => {
+		e.preventDefault();
+
 		try {
 			await updateDoc(
 				doc(db, 'chats', import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID),
@@ -30,8 +32,11 @@ const FooterChat = () => {
 	};
 
 	return (
-		<div className="chat-typing w-full h-20 bg-white-primary">
-			<div className="typing flex flex-row py-4 px-4 gap-4">
+		<div className="chat-typing w-full h-20 bg-white-primary rounded-br-[35px]">
+			<form
+				onSubmit={handleOnSend}
+				className="typing flex flex-row py-4 px-4 gap-4"
+			>
 				<InputText
 					value={text}
 					addClassName={'grow'}
@@ -40,8 +45,9 @@ const FooterChat = () => {
 						setText(e.target.value);
 					}}
 				/>
-				<div
-					onClick={handleOnSend}
+				<button
+					type="submit"
+					// onClick={handleOnSend}
 					className="send w-12 h-12 rounded-2xl flex justify-center items-center bg-blue-primary"
 				>
 					<svg
@@ -58,8 +64,8 @@ const FooterChat = () => {
 							d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
 						/>
 					</svg>
-				</div>
-			</div>
+				</button>
+			</form>
 		</div>
 	);
 };

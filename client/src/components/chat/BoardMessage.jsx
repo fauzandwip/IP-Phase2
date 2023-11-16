@@ -9,7 +9,28 @@ const BoardMessage = ({ data }) => {
 	const { currentUser } = useContext(AuthContext);
 
 	const ref = useRef();
-	console.log(data);
+
+	// const handleOnDelete = async () => {
+	// 	console.log('delete trigerr');
+	// 	try {
+	// 		const docRef = doc(
+	// 			db,
+	// 			'chats',
+	// 			import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID
+	// 		);
+	// 		// docRef.update({
+	// 		// 	messages: FieldValue.arrayRemove(data.id),
+	// 		// });
+	// 		await updateDoc(docRef, {
+	// 			messages: arrayRemove(data.id),
+	// 		});
+	// 		console.log(data.id);
+	// 		console.log(import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
+
 	useEffect(() => {
 		const fetchUser = async () => {
 			const q = query(
@@ -33,7 +54,8 @@ const BoardMessage = ({ data }) => {
 		ref.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [data]);
 
-	console.log(username, 'message username');
+	// console.log(username, 'message username');
+	// console.log(data, 'message data');
 
 	return (
 		<div

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const HeaderChat = ({ imageUrl, text }) => {
 	return (
-		<div className="chat-header h-max py-3 px-8 flex justify-start items-center bg-white-primary">
+		<div className="chat-header h-max py-3 px-8 flex justify-start items-center bg-white-primary rounded-tr-[35px]">
 			<div className="profile flex flex-row gap-2 justify-center items-center">
 				<div className="img w-12 h-12 rounded-full">
 					<img src={imageUrl} alt="profile" className="rounded-full" />

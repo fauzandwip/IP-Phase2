@@ -7,7 +7,6 @@ import { db } from '../../../firebase';
 const BodyChat = () => {
 	const [messages, setMessages] = useState([]);
 
-	console.log(import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID);
 	useEffect(() => {
 		const unSub = onSnapshot(
 			doc(db, 'chats', import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID),
@@ -21,7 +20,6 @@ const BodyChat = () => {
 		};
 	}, []);
 
-	console.log(messages);
 	return (
 		<div className="chat-section w-full h-full p-4 flex flex-col mt-auto gap-2 overflow-y-scroll scrollbar-hide bg-blue-sec">
 			{messages &&
