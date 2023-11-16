@@ -1,16 +1,23 @@
-import { useState } from 'react';
-import ButtonSubmit from '../components/ButtonSubmit';
-import CustomForm from '../components/CustomForm';
-import CustomInput from '../components/CustomInput';
-import Title from '../components/Title';
+import { useContext, useState } from 'react';
+import ButtonSubmit from '../components/form/ButtonSubmit';
+import CustomForm from '../components/form/CustomForm';
+import CustomInput from '../components/form/CustomInput';
+import Title from '../components/form/Title';
+import FooterForm from '../components/form/FooterForm';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from '@react-oauth/google';
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
+// import { auth, db } from '../../firebase';
+// import { setDoc, doc } from 'firebase/firestore';
+import { AuthContext } from '../context/AuthContext';
 
 const Register = () => {
 	const navigate = useNavigate();
+	const { currentUser, setCurrentUser } = useContext(AuthContext);
+
 	const [user, setUser] = useState({
 		username: '',
 		email: '',
@@ -21,7 +28,24 @@ const Register = () => {
 		e.preventDefault();
 
 		try {
-			await api.post('/auth/register', user);
+			const { data } = await api.post('/auth/register', user);
+			// console.log(data);
+
+			// * CLIENT FIREBASE
+			// const userCredential = await createUserWithEmailAndPassword(
+			// 	auth,
+			// 	user.email,
+			// 	user.password
+			// );
+
+			// await setDoc(doc(db, 'users', userCredential.user.uid), {
+			// 	uid: userCredential.user.uid,
+			// 	username: user.username,
+			// 	email: user.email,
+			// });
+
+			// await setDoc(doc(db, 'chatUsers', userCredential.user.uid), {});
+
 			Swal.fire({
 				title: 'Success Register',
 				text: 'please login!',
@@ -29,6 +53,8 @@ const Register = () => {
 			});
 			navigate('/login');
 		} catch (error) {
+			// console.log({ error });
+			// toast.error(error.response.data.message);
 			error.response.data.messages.forEach((message) => {
 				toast.error(message);
 			});
@@ -44,6 +70,11 @@ const Register = () => {
 			});
 
 			localStorage.setItem('access_token', data.access_token);
+			setCurrentUser((prev) => {
+				return { ...prev, ...data.data };
+			});
+
+			// console.log(currentUser, 'currentUser', data);
 			navigate('/');
 		} catch (error) {
 			console.log(error);
@@ -54,7 +85,7 @@ const Register = () => {
 		<div className="w-screen min-h-screen flex flex-row">
 			<div className="form-section flex-1 flex justify-center items-center">
 				<CustomForm onSubmit={handleOnSubmit}>
-					<Title addClassName={'text-5xl font-bold mb-14'}>
+					<Title addClassName={'text-5xl text-center font-bold mb-14'}>
 						Account Register
 					</Title>
 					<CustomInput
@@ -107,6 +138,11 @@ const Register = () => {
 						onError={() => {
 							toast.error('Register Failed!');
 						}}
+					/>
+					<FooterForm
+						text={'You have account?'}
+						path={'/login'}
+						link={'Login Now'}
 					/>
 				</CustomForm>
 			</div>
