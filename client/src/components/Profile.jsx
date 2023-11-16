@@ -1,25 +1,60 @@
 // import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import api from '../api';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
 	// const navigate = useNavigate();
+	const { currentUser, setCurrentUser } = useContext(AuthContext);
 
 	const [display, setDisplay] = useState('hidden');
-	const [image, setImage] = useState('https://imgur.com/4gaSugI.jpg');
+	const [profileImg, setProfileImg] = useState('https://imgur.com/4gaSugI.jpg');
+	const [image, setImage] = useState({});
 
-	const onUploadFile = async (e) => {
-		const image = e.target.files[0];
+	const onUploadFile = (e) => {
+		const imageInput = e.target.files[0];
 
-		if (image) {
+		if (imageInput) {
 			const reader = new FileReader();
 			reader.onload = (e) => {
-				setImage(e.target.result);
-				// console.log(image);
+				setProfileImg(e.target.result);
+				setImage(imageInput);
+				// console.log('target file', e.target.result);
+				// console.log(imageInput);
 			};
-			reader.readAsDataURL(image);
+			reader.readAsDataURL(imageInput);
 		}
 	};
+
+	const handleOnSendFile = async () => {
+		try {
+			// console.log('sendfile');
+			// console.log(image);
+			const formData = new FormData();
+			formData.append('imageUrl', image);
+			const { data } = await api.put(`/profile/img-url`, formData, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+					'Content-Type': 'multipart/form-data',
+				},
+			});
+			setCurrentUser((prev) => {
+				return {
+					...prev,
+					photoUrl: data.data.photoUrl,
+				};
+			});
+			toast.success(data.message);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		setProfileImg(currentUser.photoUrl);
+	}, []);
 
 	return (
 		<div className="side-bar w-1/3 min-h-full flex flex-col p-6 gap-20 bg-blue-sec border-x justify-between items-center">
@@ -33,7 +68,7 @@ const Profile = () => {
 					className="img w-20 h-20 rounded-full relative cursor-pointer"
 				>
 					<img
-						src={image}
+						src={profileImg}
 						alt="profile"
 						className="rounded-full border w-full h-full border-slate-100"
 					/>
@@ -65,10 +100,13 @@ const Profile = () => {
 				</div>
 				{/* username */}
 				<div className="username text-2xl font-black text-center">
-					Jack Sparrow
+					{currentUser.username}
 				</div>
 			</div>
-			<div className="w-max px-3 py-1 bg-red-400 text-sm text-slate-100 rounded-xl cursor-pointer">
+			<div
+				onClick={handleOnSendFile}
+				className="w-max px-3 py-1 bg-red-400 text-sm text-slate-100 rounded-xl cursor-pointer"
+			>
 				Delete Account
 			</div>
 		</div>

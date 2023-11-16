@@ -2,9 +2,12 @@
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Toolbar = () => {
 	const navigate = useNavigate();
+	const { currentUser } = useContext(AuthContext);
 
 	return (
 		<div className="w-28 h-full flex flex-col justify-end items-center px-4 py-12 gap-8 bg-blue-sec rounded-l-[35px]">
@@ -34,9 +37,9 @@ const Toolbar = () => {
 			</button>
 			<div className="img w-12 h-12 rounded-full">
 				<img
-					src="https://imgur.com/4gaSugI.jpg"
+					src={currentUser.photoUrl}
 					alt="profile"
-					className="rounded-full border border-slate-100"
+					className="rounded-full w-full h-full border border-slate-100"
 				/>
 			</div>
 		</div>

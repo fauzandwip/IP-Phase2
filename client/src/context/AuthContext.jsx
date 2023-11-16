@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
 			try {
 				const { data } = await api.get('/profile', {
 					headers: {
-						Authorization: localStorage.getItem('access_token'),
+						Authorization: `Bearer ${localStorage.getItem('access_token')}`,
 					},
 				});
 				setCurrentUser((prev) => {

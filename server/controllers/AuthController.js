@@ -1,11 +1,10 @@
-const { comparePassword, hashPassword } = require('../helpers/bcrypt');
+const { comparePassword } = require('../helpers/bcrypt');
 const { User } = require('../models');
 const { signToken } = require('../helpers/jwt');
 const { OAuth2Client } = require('google-auth-library');
 const { db, admin } = require('../helpers/firebase');
-const { getAuth } = require('@firebase/auth');
-const firebase = require('../helpers/firebase');
-const getImage = require('../helpers/randomCat');
+// const { getAuth } = require('@firebase/auth');
+// const firebase = require('../helpers/firebase');
 const getImageUrl = require('../helpers/randomCat');
 // const { createUserWithEmailAndPassword } = require('firebase/auth');
 // const { auth, db } = require('../db/firebase');
@@ -58,8 +57,12 @@ class AuthController {
 			});
 
 			res.status(201).json({
-				id: newUser.id,
-				email: newUser.email,
+				data: {
+					id: newUser.id,
+					username: newUser.username,
+					email: newUser.email,
+					photoUrl: newUser.photoUrl,
+				},
 			});
 		} catch (error) {
 			console.log(error);
@@ -99,7 +102,12 @@ class AuthController {
 
 			res.status(200).json({
 				access_token,
-				id: user.id,
+				data: {
+					id: user.id,
+					username: user.username,
+					email: user.email,
+					photoUrl: user.photoUrl,
+				},
 			});
 		} catch (error) {
 			console.log(error);
@@ -142,7 +150,12 @@ class AuthController {
 			// console.log(user);
 			res.status(isNewRecord ? 201 : 200).json({
 				access_token: signToken({ id: user.id }),
-				id: user.id,
+				data: {
+					id: user.id,
+					username: user.username,
+					email: user.email,
+					photoUrl: user.photoUrl,
+				},
 			});
 		} catch (error) {
 			next(error);
