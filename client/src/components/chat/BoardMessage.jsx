@@ -35,7 +35,7 @@ const BoardMessage = ({ data }) => {
 		const fetchUser = async () => {
 			const q = query(
 				collection(db, 'users'),
-				where('uid', '==', data.senderId)
+				where('id', '==', Number(data.senderId))
 			);
 
 			try {
@@ -60,18 +60,18 @@ const BoardMessage = ({ data }) => {
 	return (
 		<div
 			className={`flex flex-row w-full ${
-				data.senderId === currentUser.uid ? 'justify-end' : 'justify-start'
+				data.senderId == currentUser.id ? 'justify-end' : 'justify-start'
 			}`}
 		>
 			<div
 				className={`w-2/5 flex flex-row ${
-					data.senderId === currentUser.uid ? 'justify-end' : 'justify-start'
+					data.senderId == currentUser.id ? 'justify-end' : 'justify-start'
 				}`}
 			>
 				<div
 					ref={ref}
 					className={`message w-fit flex flex-row gap-2 py-2 px-4 rounded-2xl ${
-						data.senderId === currentUser.uid ? 'owner-msg' : 'other-msg'
+						data.senderId == currentUser.id ? 'owner-msg' : 'other-msg'
 					}`}
 				>
 					<span>{username}</span>

@@ -68,7 +68,9 @@ const Profile = () => {
 					Jack Sparrow
 				</div>
 			</div>
-			<div></div>
+			<div className="w-max px-3 py-1 bg-red-400 text-sm text-slate-100 rounded-xl cursor-pointer">
+				Delete Account
+			</div>
 		</div>
 	);
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ButtonSubmit from '../components/form/ButtonSubmit';
 import CustomForm from '../components/form/CustomForm';
 import CustomInput from '../components/form/CustomInput';
@@ -9,12 +9,15 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from '@react-oauth/google';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../../firebase';
-import { setDoc, doc } from 'firebase/firestore';
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
+// import { auth, db } from '../../firebase';
+// import { setDoc, doc } from 'firebase/firestore';
+import { AuthContext } from '../context/AuthContext';
 
 const Register = () => {
 	const navigate = useNavigate();
+	const { currentUser, setCurrentUser } = useContext(AuthContext);
+
 	const [user, setUser] = useState({
 		username: '',
 		email: '',
@@ -25,22 +28,23 @@ const Register = () => {
 		e.preventDefault();
 
 		try {
-			// const { data } = await api.post('/auth/register', user);
-			// console.log(data);
+			const { data } = await api.post('/auth/register', user);
+			console.log(data);
 
-			const userCredential = await createUserWithEmailAndPassword(
-				auth,
-				user.email,
-				user.password
-			);
+			// * CLIENT FIREBASE
+			// const userCredential = await createUserWithEmailAndPassword(
+			// 	auth,
+			// 	user.email,
+			// 	user.password
+			// );
 
-			await setDoc(doc(db, 'users', userCredential.user.uid), {
-				uid: userCredential.user.uid,
-				username: user.username,
-				email: user.email,
-			});
+			// await setDoc(doc(db, 'users', userCredential.user.uid), {
+			// 	uid: userCredential.user.uid,
+			// 	username: user.username,
+			// 	email: user.email,
+			// });
 
-			await setDoc(doc(db, 'chatUsers', userCredential.user.uid), {});
+			// await setDoc(doc(db, 'chatUsers', userCredential.user.uid), {});
 
 			Swal.fire({
 				title: 'Success Register',
@@ -50,10 +54,10 @@ const Register = () => {
 			navigate('/login');
 		} catch (error) {
 			console.log({ error });
-			toast.error(error.code);
-			// error.response.data.messages.forEach((message) => {
-			// 	toast.error(message);
-			// });
+			// toast.error(error.response.data.message);
+			error.response.data.messages.forEach((message) => {
+				toast.error(message);
+			});
 		}
 	};
 
@@ -66,6 +70,11 @@ const Register = () => {
 			});
 
 			localStorage.setItem('access_token', data.access_token);
+			setCurrentUser((prev) => {
+				return { ...prev, ...data.data };
+			});
+
+			console.log(currentUser, 'currentUser', data);
 			navigate('/');
 		} catch (error) {
 			console.log(error);

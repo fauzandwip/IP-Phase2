@@ -14,13 +14,15 @@ const FooterChat = () => {
 		e.preventDefault();
 
 		try {
+			// console.log(text);
+			// console.log(currentUser);
 			await updateDoc(
 				doc(db, 'chats', import.meta.env.VITE_REACT_APP_TORTUGA_CHANNEL_ID),
 				{
 					messages: arrayUnion({
 						id: uuid(),
 						text,
-						senderId: currentUser.uid,
+						senderId: currentUser.id,
 						date: Timestamp.now(),
 					}),
 				}

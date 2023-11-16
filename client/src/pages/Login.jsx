@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ButtonSubmit from '../components/form/ButtonSubmit';
 import CustomForm from '../components/form/CustomForm';
 import CustomInput from '../components/form/CustomInput';
@@ -9,11 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from '@react-oauth/google';
 import FooterForm from '../components/form/FooterForm';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+// import { signInWithEmailAndPassword } from 'firebase/auth';
+// import { auth } from '../../firebase';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
 	const navigate = useNavigate();
+	const { currentUser, setCurrentUser } = useContext(AuthContext);
 	const [user, setUser] = useState({
 		email: 'test1@gmail.com',
 		password: '123456',
@@ -23,24 +25,28 @@ const Login = () => {
 		e.preventDefault();
 
 		try {
-			// const { data } = await api.post('/auth/login', user);
-			const res = await signInWithEmailAndPassword(
-				auth,
-				user.email,
-				user.password
-			);
-			// console.log(res);
-			// console.log(res.user.accessToken);
-			localStorage.setItem('access_token', res.user.accessToken);
+			const { data } = await api.post('/auth/login', user);
+			// const res = await signInWithEmailAndPassword(
+			// 	auth,
+			// 	user.email,
+			// 	user.password
+			// );
+			// console.log('trigerr');
+			localStorage.setItem('access_token', data.access_token);
+			setCurrentUser((prev) => {
+				return { ...prev, ...data.data };
+			});
+
 			Swal.fire({
 				title: 'Success Login',
 				text: 'Welcome!',
 				icon: 'success',
 			});
+			console.log(currentUser, 'currentUser', data);
 			navigate('/');
 		} catch (error) {
-			toast.error(error.code);
-			// toast.error(error.response.data.message);
+			// toast.error(error.code);
+			toast.error(error.response.data.message);
 		}
 	};
 
@@ -52,7 +58,11 @@ const Login = () => {
 				},
 			});
 
+			// console.log(typeof data.id);
 			localStorage.setItem('access_token', data.access_token);
+			setCurrentUser((prev) => {
+				return { ...prev, ...data.data };
+			});
 			navigate('/');
 		} catch (error) {
 			console.log(error);

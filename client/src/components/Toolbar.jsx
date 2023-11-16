@@ -8,6 +8,7 @@ const Toolbar = () => {
 
 	return (
 		<div className="w-28 h-full flex flex-col justify-end items-center px-4 py-12 gap-8 bg-blue-sec rounded-l-[35px]">
+			{/* logout */}
 			<button
 				className="rounded-full p-2 bg-white-primary/50"
 				onClick={() => {
