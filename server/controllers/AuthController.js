@@ -2,6 +2,9 @@ const { comparePassword } = require('../helpers/bcrypt');
 const { User } = require('../models');
 const { signToken } = require('../helpers/jwt');
 const { OAuth2Client } = require('google-auth-library');
+// const { createUserWithEmailAndPassword } = require('firebase/auth');
+// const { auth, db } = require('../db/firebase');
+// const { setDoc, doc } = require('firebase/firestore');
 
 class AuthController {
 	static async register(req, res, next) {
@@ -15,11 +18,28 @@ class AuthController {
 				photoUrl,
 			});
 
+			// const userCredential = await createUserWithEmailAndPassword(
+			// 	auth,
+			// 	email,
+			// 	password
+			// );
+
+			// await setDoc(doc(db, 'users', userCredential.user.uid), {
+			// 	uid: userCredential.user.uid,
+			// 	username: username,
+			// 	email: email,
+			// });
+
+			res.status(201).json({
+				id: userCredential.user.uid,
+				email: userCredential.user.email,
+			});
 			res.status(201).json({
 				id: newUser.id,
 				email: newUser.email,
 			});
 		} catch (error) {
+			// console.log({ error });
 			next(error);
 		}
 	}
