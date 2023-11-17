@@ -35,7 +35,7 @@ const Profile = () => {
 			if (image) {
 				const formData = new FormData();
 				formData.append('imageUrl', image);
-				const { data } = await api.patch(`/profile/img-url`, formData, {
+				const { data } = await api.put(`/profile/img-url`, formData, {
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem('access_token')}`,
 						'Content-Type': 'multipart/form-data',
