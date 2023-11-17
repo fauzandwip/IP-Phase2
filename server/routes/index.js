@@ -8,7 +8,7 @@ const router = express.Router();
 router.use('/auth', require('./auth'));
 router.get('/', authentication, (req, res) => res.send('TEST'));
 router.get('/profile', authentication, ProfileController.getProfile);
-router.put(
+router.patch(
 	'/profile/img-url',
 	authentication,
 	multerUpload.single('imageUrl'),
