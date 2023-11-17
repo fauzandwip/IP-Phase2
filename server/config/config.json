@@ -17,3 +17,15 @@
     "use_env_variable": "DATABASE_URL"
   }
 }
+
+{
+  JWT_SECRET_KEY: "jackkksparrroww",
+GOOGLE_CLIENT_ID: "214321293033-5huupq5l9dqghe9oosukmnajfpbeeltb.apps.googleusercontent.com",
+OPEN_AI_KEY: "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",
+X_API_KEY_RAPIDAPI: "live_tkfn5Qu13T9qimIfGmAxBAFooC12t7GvENwLXIoJQRTgUv83zQ8mjz5cSpzahmyK",
+X_RAPID_API_KEY: "a2db95247cmsha1a9e9ba2712f39p1a8945jsn3d156fb443bd",
+X_RAPID_API_HOST: "cat14.p.rapidapi.com",
+CLOUDINARY_API_KEY: "539171713662181",
+CLOUDINARY_SECRET_KEY: "WUAvaEVmr0coh6ajxTdpFHf1aUs",
+CLOUDINARY_CLOUD_NAME: "dchem6nma",
+}
