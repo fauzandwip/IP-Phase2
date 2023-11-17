@@ -15,10 +15,10 @@ import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
 	const navigate = useNavigate();
-	const { setCurrentUser } = useContext(AuthContext);
+	const { currentUser, setCurrentUser } = useContext(AuthContext);
 	const [user, setUser] = useState({
-		email: '',
-		password: '',
+		email: 'test1@gmail.com',
+		password: '12345',
 	});
 
 	const handleOnSubmit = async (e) => {
@@ -46,7 +46,6 @@ const Login = () => {
 			navigate('/');
 		} catch (error) {
 			// toast.error(error.code);
-			console.log(error);
 			toast.error(error.response.data.message);
 		}
 	};

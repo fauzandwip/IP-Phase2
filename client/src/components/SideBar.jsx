@@ -1,13 +1,13 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import BoardChat from './BoardChat';
-// import InputChat from './chat/InputChat';
+import InputChat from './chat/InputChat';
 // import { collection, getDocs, query, where } from 'firebase/firestore';
 // import { db } from '../../firebase';
 // import { AuthContext } from '../context/AuthContext';
 
 const SideBar = () => {
 	// const { currentUser } = useContext(AuthContext);
-	// const [search, setSearch] = useState('');
+	const [search, setSearch] = useState('');
 	// const [user, setUser] = useState(null);
 
 	// const handleClick = async () => {
@@ -37,7 +37,7 @@ const SideBar = () => {
 	return (
 		<div className="side-bar w-1/3 min-h-full flex flex-col p-4 gap-6 bg-white-primary border-x">
 			<h3 className="title text-2xl font-black">Chats</h3>
-			{/* <InputChat
+			<InputChat
 				value={search}
 				placeholder={'Search'}
 				addClassName={'p-3 w-full'}
@@ -45,7 +45,7 @@ const SideBar = () => {
 					setSearch(e.target.value);
 					// fetchUser();
 				}}
-			/> */}
+			/>
 
 			{/* chats */}
 			<div className="list-chats flex flex-col gap-4">
@@ -54,8 +54,8 @@ const SideBar = () => {
 					imageUrl={'https://imgur.com/4gaSugI.jpg'}
 					chatName={'Tortuga'}
 					textMsg={'Jack Sparrow here'}
-					bgColor={'bg-blue-primary'}
-					color={'text-slate-100'}
+					bgColor={'bg-white'}
+					color={'text-slate-800'}
 				/>
 			</div>
 		</div>
