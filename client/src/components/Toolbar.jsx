@@ -18,7 +18,7 @@ const Toolbar = ({ sideBar, setSideBar }) => {
 		<div className="w-28 h-full flex flex-col justify-end items-center px-4 py-12 gap-8 bg-blue-sec rounded-l-[35px]">
 			{/* logout */}
 			<button
-				className="rounded-full p-2 bg-white-primary/50"
+				className="rounded-full p-2 bg-blue-primary/50"
 				onClick={() => {
 					// signOut(auth);
 					localStorage.removeItem('access_token');
@@ -31,7 +31,7 @@ const Toolbar = ({ sideBar, setSideBar }) => {
 					fill="none"
 					viewBox="0 0 24 24"
 					strokeWidth={1.5}
-					stroke="currentColor"
+					stroke="black"
 					className="w-6 h-6"
 				>
 					<path
